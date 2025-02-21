@@ -1,0 +1,170 @@
+{
+  "name": "WF-7.2: Google Scraper Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -580,
+        -200
+      ],
+      "id": "160eef51-d4dc-439c-affd-02f065c76e3c",
+      "name": "When chat message received",
+      "webhookId": "d8032772-c484-4d24-ac7e-360767654212"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -360,
+        -200
+      ],
+      "id": "c54fb3d8-29f8-4325-816a-645ebf964e39",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        0
+      ],
+      "id": "59e67e0f-b605-43f9-9092-da44511fe73e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Wpz92gS5tHENlMa7",
+          "name": "OpenAi for N8N - 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -300,
+        0
+      ],
+      "id": "d996fb4b-6c3c-4f55-a341-e53c3d9b8e67",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "name": "profilescollector",
+        "description": "Call this tool to get linkedin profiles",
+        "workflowId": {
+          "__rl": true,
+          "value": "2qs5QXVRKHjfH0fj",
+          "mode": "list",
+          "cachedResultName": "WF-7.1: Google Scraper"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        0
+      ],
+      "id": "9e08a144-c99b-4201-b451-f9ec7289099e",
+      "name": "profilescollector"
+    },
+    {
+      "parameters": {
+        "content": "## WF-7.2: Google Scraper Agent",
+        "height": 80,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        -340
+      ],
+      "typeVersion": 1,
+      "id": "e036e75f-dca5-4355-aef7-86f30ec59e22",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "profilescollector": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "99532779-2afc-46e3-8134-cdd52d74121d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d2d70a2fb453af06e00a928d8941f9b9244bb70831be608328c9e9fa7d1bda3"
+  },
+  "id": "ilgIYOuC6ddBSTSy",
+  "tags": []
+}
